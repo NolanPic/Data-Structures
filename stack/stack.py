@@ -17,13 +17,15 @@ class Stack:
         self.storage = LinkedList()
 
     def __len__(self):
-        self.size = self.storage.count()
         return self.size
 
     def push(self, value):
         self.storage.add_as_head(value)
+        self.size += 1
 
     def pop(self):
+        if self.size > 0:
+            self.size -= 1
         return self.storage.remove_head()
 
 # **** ARRAY IMPLEMENTATION ****
