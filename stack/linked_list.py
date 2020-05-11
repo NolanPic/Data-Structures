@@ -46,7 +46,7 @@ class LinkedList:
     def remove_head(self):
         if self.head is not None:
             value = self.head.value
-            self.head = self.head.next_node()
+            self.head = self.head.get_next()
             return value
         return None
     
@@ -57,12 +57,13 @@ class LinkedList:
         current_node = self.head
         while current_node is not None:
             # check to see if the next node is the last node
-            if current_node.next_node().next_node() is None:
-                # sever off the last node, making the current
-                # node the new tail
-                current_node.set_next(None)
-                break
-            current_node = current_node.next_node()
+            if current_node.get_next() is not None:
+                if current_node.get_next().get_next() is None:
+                    # sever off the last node, making the current
+                    # node the new tail
+                    current_node.set_next(None)
+                    break
+            current_node = current_node.get_next()
                 
 class Node:
     def __init__(self, value=None):
