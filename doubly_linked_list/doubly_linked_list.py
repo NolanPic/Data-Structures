@@ -124,8 +124,13 @@ class DoublyLinkedList:
         
         value = self.tail.value
         
+        # what if there is only one item in the list?
+        if self.head is self.tail:
+            self.head = None
+            self.tail = None
+        
         # what if there are only two items in the list?
-        if self.head is self.tail.prev:
+        elif self.head is self.tail.prev:
             self.tail = self.head
             self.head.next = None
             
@@ -194,11 +199,10 @@ class DoublyLinkedList:
     
 node = ListNode(1)
 dll = DoublyLinkedList(node)
-dll.remove_from_head()
+dll.add_to_tail(2)
+dll.add_to_tail(3)
+dll.add_to_head(0)
 print(dll)
-print(dll.head)
-print(dll.tail)
-print(dll.length)
 
 
 
