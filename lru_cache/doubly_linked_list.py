@@ -50,15 +50,16 @@ class DoublyLinkedList:
     """Wraps the given value in a ListNode and inserts it 
     as the new head of the list. Don't forget to handle 
     the old head node's previous pointer accordingly."""
-    def add_to_head(self, node):
+    def add_to_head(self, value):
         # what if there is no head?
         # in this case, self.head will be None and we will simply
         # be setting next to None
-        node.next = self.head
+        
+        new_head = ListNode(value, next=self.head)
         
         if self.head is not None:
-            self.head.prev = node
-        self.head = node
+            self.head.prev = new_head
+        self.head = new_head
         
         # if this was an empty list, update the tail to
         # point to this head
@@ -78,7 +79,7 @@ class DoublyLinkedList:
         # ensure the length of the list is updated
         self.length -=1
         # set value for return
-        value = self.head
+        value = self.head.value
         
         if self.head is self.tail:
             # the head and the tail point to the same item
@@ -97,17 +98,17 @@ class DoublyLinkedList:
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly."""
-    def add_to_tail(self, node):
+    def add_to_tail(self, value):
         # what if the list is empty?
-        node.prev = self.tail
+        new_node = ListNode(value, prev=self.tail)
         
         if self.head is None and self.tail is None:
             # the list is empty
-            self.head = node
-            self.tail = node
+            self.head = new_node
+            self.tail = new_node
         else:
-            self.tail.next = node
-            self.tail = node
+            self.tail.next = new_node
+            self.tail = new_node
         self.length +=1
         
         
@@ -121,7 +122,7 @@ class DoublyLinkedList:
         if self.head is None and self.tail is None:
             return None
         
-        value = self.tail
+        value = self.tail.value
         
         # what if there is only one item in the list?
         if self.head is self.tail:
@@ -146,17 +147,19 @@ class DoublyLinkedList:
     List and inserts it as the new head node of the List."""
     def move_to_front(self, node):
         # remove the node from its current spot
+        node_value = node.value
         self.delete(node)
         # add node to the head
-        self.add_to_head(node)
+        self.add_to_head(node_value)
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
     def move_to_end(self, node):
         # remove the node from its current spot
+        node_value = node.value
         self.delete(node)
         # add node to the tail
-        self.add_to_tail(node)
+        self.add_to_tail(node_value)
 
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
@@ -193,5 +196,13 @@ class DoublyLinkedList:
             list_str += f'{curr.prev} <-- {flags}{curr} --> {curr.next}\n'
             curr = curr.next
         return list_str
+    
+node = ListNode(1)
+dll = DoublyLinkedList(node)
+dll.add_to_tail(2)
+dll.add_to_tail(3)
+dll.add_to_head(0)
+print(dll)
+
 
 
