@@ -1,3 +1,4 @@
+from collections import deque
 """
 Binary search trees are a data structure that enforce an ordering over 
 the data they store. That ordering in turn makes it a lot more efficient 
@@ -77,6 +78,21 @@ class BSTNode:
             self.right.for_each(fn)
         if self.left:
             self.left.for_each(fn)
+            
+    
+    def breadth_first_search(self, fn):
+        queue = deque()
+        
+        queue.append(self)
+        
+        while len(queue) > 0:
+            current = queue.popleft()
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
+                
+            fn(current.value)
 
     # Part 2 -----------------------
 
@@ -93,7 +109,14 @@ class BSTNode:
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        print(node.value)
+        if self.left is not None:
+            # continue the search left
+            self.left.dft_print(self.left)
+
+        if self.right is not None:
+            # continue the search right
+            self.right.dft_print(self.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -105,3 +128,14 @@ class BSTNode:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+
+# bst = BSTNode(1)
+# bst.insert(8)
+# bst.insert(5)
+# bst.insert(7)
+# bst.insert(6)
+# bst.insert(3)
+# bst.insert(4)
+# bst.insert(2)
+# bst.dft_print(bst)
